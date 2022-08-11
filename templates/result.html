@@ -11,11 +11,11 @@
             <th>Age</th>
             <th>Roll No</th>
         </thead>
-        {% for row in t %}
+        {% for i in range(n)%}
         <tr>
-            <td>{{t['name']}}</td>
-            <td>{{t['age']}}</td>
-            <td>{{t['rollno']}}</td>
+            <td>{{x[i]}}</td>
+            <td>{{y[i]}}</td>
+            <td>{{z[i]}}</td>
         </tr>
         {% endfor %}
     </table>

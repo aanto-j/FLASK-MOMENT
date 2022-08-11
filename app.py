@@ -1,3 +1,4 @@
+from operator import itemgetter
 from flask import Flask,render_template,request
 import sqlite3
 
@@ -11,11 +12,16 @@ def home():
 def result():
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
-    cursor.execute('select * from student order by name desc')
+    cursor.execute('select * from student')
     t = cursor.fetchall()
     conn.commit()
     conn.close()
-    return render_template('result.html',x=t)
+    nos = len(t)
+    names = list(map(itemgetter(0),t))
+    ages = list(map(itemgetter(1),t))
+    rollnos = list(map(itemgetter(2),t))
+    print(nos)
+    return render_template('result.html',x=names,y=ages,z=rollnos,n=nos)
 
 @app.route('/getinfo',methods=['GET','POST'])
 def getinfo():
