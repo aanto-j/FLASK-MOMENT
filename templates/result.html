@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <table border="2">
+        <thead>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Roll No</th>
+        </thead>
+        {% for row in t %}
+        <tr>
+            <td>{{t['name']}}</td>
+            <td>{{t['age']}}</td>
+            <td>{{t['rollno']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
