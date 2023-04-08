@@ -1,5 +1,5 @@
 from operator import itemgetter
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,jsonify
 import sqlite3
 
 app=Flask('__name__')
@@ -21,7 +21,8 @@ def result():
     ages = list(map(itemgetter(1),t))
     rollnos = list(map(itemgetter(2),t))
     print(nos)
-    return render_template('result.html',x=names,y=ages,z=rollnos,n=nos)
+    # return render_template('result.html',x=names,y=ages,z=rollnos,n=nos)
+    return jsonify(names)
 
 @app.route('/getinfo',methods=['GET','POST'])
 def getinfo():
@@ -29,11 +30,14 @@ def getinfo():
         a = request.form.get('name')
         b = request.form.get('age')
         c = request.form.get('rollno')
-        conn = sqlite3.connect('data.db')
-        cursor = conn.cursor()
-        cursor.execute('insert into student values(?,?,?)',(a,b,c)) 
-        conn.commit()
-        conn.close()
+        try:
+            conn = sqlite3.connect('data.db')
+            cursor = conn.cursor()
+            cursor.execute('insert into student values(?,?,?)',(a,b,c)) 
+            conn.commit()
+            conn.close()
+        except sqlite3.IntegrityError:
+            return "Value already exists"
         return render_template('home.html')
     return render_template('getinfo.html')
     
